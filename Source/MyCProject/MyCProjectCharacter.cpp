@@ -18,6 +18,11 @@ DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 AMyCProjectCharacter::AMyCProjectCharacter()
 {
+	// Инициализация компонента системы способностей
+	// AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComp"));
+	//
+	// // Инициализация набора атрибутов
+	// AttributeSet = CreateDefaultSubobject<UMyAttributeSet>(TEXT("AttributeSet"));
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 		

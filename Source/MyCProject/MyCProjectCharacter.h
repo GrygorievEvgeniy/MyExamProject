@@ -5,7 +5,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+#include "AbilitySystemInterface.h"
 #include "MyCProjectCharacter.generated.h"
+
 
 class USpringArmComponent;
 class UCameraComponent;
@@ -44,9 +46,17 @@ class AMyCProjectCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 
+	// //Add GAS AttributeSet
+	// UPROPERTY()
+	// class UMyAttributeSet* AttributeSet;
+
+
+
 public:
 	AMyCProjectCharacter();
-	
+	//Add GAS AbilitySystemComponent
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
+	class UAbilitySystemComponent* AbilitySystemComponent;
 
 protected:
 
