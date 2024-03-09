@@ -13,5 +13,7 @@ UCLASS()
 class MYCPROJECT_API UMyAbilitySystemComponent : public UAbilitySystemComponent
 {
 	GENERATED_BODY()
-	
+
+public:
+	UMyAbilitySystemComponent();
 };

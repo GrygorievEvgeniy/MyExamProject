@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "AbilitySystemInterface.h"
+#include "AbilitySystem/MyAbilitySystemComponent.h"
 #include "MyCProjectCharacter.generated.h"
 
 
@@ -18,7 +19,7 @@ struct FInputActionValue;
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
 UCLASS(config=Game)
-class AMyCProjectCharacter : public ACharacter
+class AMyCProjectCharacter : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -46,9 +47,6 @@ class AMyCProjectCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 
-	// //Add GAS AttributeSet
-	// UPROPERTY()
-	// class UMyAttributeSet* AttributeSet;
 
 
 
@@ -56,7 +54,15 @@ public:
 	AMyCProjectCharacter();
 	//Add GAS AbilitySystemComponent
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
-	class UAbilitySystemComponent* AbilitySystemComponent;
+	class UMyAbilitySystemComponent* AbilitySystem;
+
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override
+	{
+		return AbilitySystem;
+	}
+
+	UPROPERTY()
+	class UMyCAttributeSet* AttributeSet;
 
 protected:
 

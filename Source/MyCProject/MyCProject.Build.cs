@@ -9,7 +9,7 @@ public class MyCProject : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" , "GameplayAbilities" });
 		// Add GAS plugin to project
 		// ReSharper disable once RedundantExplicitArrayCreation
 		PrivateDependencyModuleNames.AddRange(new string[] {

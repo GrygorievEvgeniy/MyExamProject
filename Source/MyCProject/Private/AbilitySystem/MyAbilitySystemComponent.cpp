@@ -3,3 +3,6 @@
 
 #include "AbilitySystem/MyAbilitySystemComponent.h"
 
+UMyAbilitySystemComponent::UMyAbilitySystemComponent()
+{
+}

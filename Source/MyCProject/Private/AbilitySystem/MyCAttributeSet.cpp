@@ -12,18 +12,23 @@ UMyCAttributeSet::UMyCAttributeSet()
 	MaxHealth = 100.0f;
 }
 
-void UMyCAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+void UMyCAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-	DOREPLIFETIME_CONDITION_NOTIFY(UMyCAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);	
-	DOREPLIFETIME_CONDITION_NOTIFY(UMyCAttributeSet, Health, COND_None, REPNOTIFY_Always);
+	Super::PreAttributeChange(Attribute, NewValue);
 }
 
-void UMyCAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
+void UMyCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
-	
+	Super::PostGameplayEffectExecute(Data);
 }
-void UMyCAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const
+
+
+void UMyCAttributeSet::OnRep_CurrentHealth(const FGameplayAttributeData& OldValue)
 {
-	
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UMyCAttributeSet, Health, OldValue);
+}
+
+void UMyCAttributeSet::OnRep_MaximumHealth(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UMyCAttributeSet, MaxHealth, OldValue);
 }

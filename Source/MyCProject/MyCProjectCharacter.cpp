@@ -9,6 +9,9 @@
 #include "GameFramework/Controller.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "AbilitySystemComponent.h"
+#include "AbilitySystem/MyAbilitySystemComponent.h"
+#include "AbilitySystem/MyCAttributeSet.h"
 #include "InputActionValue.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
@@ -19,9 +22,9 @@ DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 AMyCProjectCharacter::AMyCProjectCharacter()
 {
 	// Инициализация компонента системы способностей
-	// AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComp"));
-	//
+	AbilitySystem = CreateDefaultSubobject<UMyAbilitySystemComponent>(TEXT("AbilitySystem"));
 	// // Инициализация набора атрибутов
+	AttributeSet = CreateDefaultSubobject<UMyCAttributeSet>("AttributeSet");
 	// AttributeSet = CreateDefaultSubobject<UMyAttributeSet>(TEXT("AttributeSet"));
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -72,6 +75,7 @@ void AMyCProjectCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+	AbilitySystem->InitAbilityActorInfo(this, this);
 }
 
 //////////////////////////////////////////////////////////////////////////
