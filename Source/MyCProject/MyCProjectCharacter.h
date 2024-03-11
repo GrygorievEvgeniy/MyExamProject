@@ -47,11 +47,22 @@ class AMyCProjectCharacter : public ACharacter, public IAbilitySystemInterface
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 
+	/** Ability System Component */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities, meta = (AllowPrivateAccess = "true"))
+	class UMyAbilitySystemComponent* AbilitySystemComponent;
 
-
+	// /** Attribute Set */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities, meta = (AllowPrivateAccess = "true"))
+	class UMyCAttributeSet* AttributeSet;
+	
+	
 
 public:
 	AMyCProjectCharacter();
+
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "UI")
+	class UWidgetComponent* UIFloatingStatusBarComponent;
+	
 	//Add GAS AbilitySystemComponent
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
 	class UMyAbilitySystemComponent* AbilitySystem;
@@ -61,8 +72,10 @@ public:
 		return AbilitySystem;
 	}
 
-	UPROPERTY()
-	class UMyCAttributeSet* AttributeSet;
+	// UPROPERTY()
+	// class UMyCAttributeSet* AttributeSet;
+
+	
 
 protected:
 
@@ -71,12 +84,16 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
-			
 
+	
 protected:
+
+	virtual void OnHealthAttributeChanged(const FOnAttributeChangeData& Data);
+
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+
+virtual void OnRemoveGameplayEffectCallback(const FActiveGameplayEffect& EffectRemoved);
 	// To add mapping context
 	virtual void BeginPlay();
 
@@ -86,4 +103,5 @@ public:
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 };
+
 

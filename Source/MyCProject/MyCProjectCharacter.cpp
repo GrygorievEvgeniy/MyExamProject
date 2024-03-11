@@ -62,10 +62,18 @@ AMyCProjectCharacter::AMyCProjectCharacter()
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
 
+
+void AMyCProjectCharacter::OnHealthAttributeChanged(const FOnAttributeChangeData& Data)
+{
+	const float Health = Data.NewValue;
+	UE_LOG(LogTemp, Warning, TEXT("Health: %f"), Health);
+}
+
 void AMyCProjectCharacter::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
+
 
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
@@ -75,7 +83,13 @@ void AMyCProjectCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
-	AbilitySystem->InitAbilityActorInfo(this, this);
+	if (AbilitySystemComponent)
+	{
+		FGameplayAbilityActorInfo* actorInfo = new FGameplayAbilityActorInfo();
+		actorInfo->InitFromActor(this, this, AbilitySystemComponent);
+		AbilitySystemComponent->AbilityActorInfo = TSharedPtr<FGameplayAbilityActorInfo>(actorInfo);
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSet->GetHealthAttribute()).AddUObject(this, &AMyCProjectCharacter::OnHealthAttributeChanged);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -100,6 +114,10 @@ void AMyCProjectCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	{
 		UE_LOG(LogTemplateCharacter, Error, TEXT("'%s' Failed to find an Enhanced Input component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
 	}
+}
+
+void AMyCProjectCharacter::OnRemoveGameplayEffectCallback(const FActiveGameplayEffect& EffectRemoved)
+{
 }
 
 void AMyCProjectCharacter::Move(const FInputActionValue& Value)

@@ -27,6 +27,7 @@ public:
 
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
+	
 
 	// Holds the current value for Health.
 	UPROPERTY()
@@ -38,12 +39,36 @@ public:
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS(UMyCAttributeSet, MaxHealth);
 
+	// Holds the current value for Stamina.
+	UPROPERTY()
+	FGameplayAttributeData CurrentStamina;
+	ATTRIBUTE_ACCESSORS(UMyCAttributeSet, CurrentStamina)
+
+	// Holds the value for Maximum Stamina.
+	UPROPERTY()
+	FGameplayAttributeData MaximumStamina;
+	ATTRIBUTE_ACCESSORS(UMyCAttributeSet, MaximumStamina)
+
+	// Holds the current value for Stamina Regeneration.
+	UPROPERTY()
+	FGameplayAttributeData StaminaRegeneration;
+	ATTRIBUTE_ACCESSORS(UMyCAttributeSet, StaminaRegeneration)
+
 protected:
 
-	UFUNCTION()
+	UFUNCTION(blueprintCallable, Category = "Attributes")
 	virtual void OnRep_CurrentHealth(const FGameplayAttributeData& OldValue);
 
 	UFUNCTION()
 	virtual void OnRep_MaximumHealth(const FGameplayAttributeData& OldValue);
 
+	UFUNCTION()
+	virtual void OnRep_CurrentStamina(const FGameplayAttributeData& OldValue);
+
+	UFUNCTION()
+	virtual void OnRep_MaximumStamina(const FGameplayAttributeData& OldValue);
+
+	UFUNCTION()
+	virtual void OnRep_StaminaRegeneration(const FGameplayAttributeData& OldValue);
+	
 };

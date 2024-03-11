@@ -10,6 +10,9 @@ UMyCAttributeSet::UMyCAttributeSet()
 {
 	Health = 100.0f;
 	MaxHealth = 100.0f;
+	CurrentStamina = 100.0f;
+	MaximumStamina = 100.0f;
+	StaminaRegeneration = 1.0f;
 }
 
 void UMyCAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
@@ -22,7 +25,6 @@ void UMyCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 	Super::PostGameplayEffectExecute(Data);
 }
 
-
 void UMyCAttributeSet::OnRep_CurrentHealth(const FGameplayAttributeData& OldValue)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UMyCAttributeSet, Health, OldValue);
@@ -31,4 +33,19 @@ void UMyCAttributeSet::OnRep_CurrentHealth(const FGameplayAttributeData& OldValu
 void UMyCAttributeSet::OnRep_MaximumHealth(const FGameplayAttributeData& OldValue)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UMyCAttributeSet, MaxHealth, OldValue);
+}
+
+void UMyCAttributeSet::OnRep_CurrentStamina(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UMyCAttributeSet, CurrentStamina, OldValue);
+}
+
+void UMyCAttributeSet::OnRep_MaximumStamina(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UMyCAttributeSet, MaximumStamina, OldValue);
+}
+
+void UMyCAttributeSet::OnRep_StaminaRegeneration(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UMyCAttributeSet, StaminaRegeneration, OldValue);
 }

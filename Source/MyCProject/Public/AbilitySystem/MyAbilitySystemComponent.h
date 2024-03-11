@@ -16,4 +16,6 @@ class MYCPROJECT_API UMyAbilitySystemComponent : public UAbilitySystemComponent
 
 public:
 	UMyAbilitySystemComponent();
-};
+
+	};
+
