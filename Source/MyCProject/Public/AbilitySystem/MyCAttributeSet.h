@@ -41,8 +41,8 @@ public:
 
 	// Holds the current value for Stamina.
 	UPROPERTY()
-	FGameplayAttributeData CurrentStamina;
-	ATTRIBUTE_ACCESSORS(UMyCAttributeSet, CurrentStamina)
+	FGameplayAttributeData Stamina;
+	ATTRIBUTE_ACCESSORS(UMyCAttributeSet, Stamina)
 
 	// Holds the value for Maximum Stamina.
 	UPROPERTY()
@@ -59,16 +59,16 @@ protected:
 	UFUNCTION(blueprintCallable, Category = "Attributes")
 	virtual void OnRep_CurrentHealth(const FGameplayAttributeData& OldValue);
 
-	UFUNCTION()
+	UFUNCTION(blueprintCallable, Category = "Attributes")
 	virtual void OnRep_MaximumHealth(const FGameplayAttributeData& OldValue);
 
-	UFUNCTION()
-	virtual void OnRep_CurrentStamina(const FGameplayAttributeData& OldValue);
+	UFUNCTION(blueprintCallable, Category = "Attributes")
+	virtual void OnRep_Stamina(const FGameplayAttributeData& OldValue);
 
-	UFUNCTION()
+	UFUNCTION(blueprintCallable, Category = "Attributes")
 	virtual void OnRep_MaximumStamina(const FGameplayAttributeData& OldValue);
 
-	UFUNCTION()
+	UFUNCTION(blueprintCallable, Category = "Attributes")
 	virtual void OnRep_StaminaRegeneration(const FGameplayAttributeData& OldValue);
 	
 };

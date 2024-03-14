@@ -69,6 +69,12 @@ void AMyCProjectCharacter::OnHealthAttributeChanged(const FOnAttributeChangeData
 	UE_LOG(LogTemp, Warning, TEXT("Health: %f"), Health);
 }
 
+void AMyCProjectCharacter::OnStaminaAttributeChanged(const FOnAttributeChangeData& Data)
+{
+	const float Stamina = Data.NewValue;
+	UE_LOG(LogTemp, Warning, TEXT("Stamina: %f"), Stamina);
+}
+
 void AMyCProjectCharacter::BeginPlay()
 {
 	// Call the base class  
@@ -154,4 +160,60 @@ void AMyCProjectCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void AMyCProjectCharacter::RemoveAbilityWithTags(FGameplayTagContainer TagContainer)
+{
+	if (AbilitySystemComponent)
+	{
+		TArray<FGameplayAbilitySpec*> MatchingAbilities;
+		AbilitySystemComponent->GetActivatableGameplayAbilitySpecsByAllMatchingTags(TagContainer, MatchingAbilities, true);
+		for (FGameplayAbilitySpec* Spec : MatchingAbilities)
+		{
+			AbilitySystemComponent->ClearAbility(Spec->Handle);
+		}
+	}
+}
+
+void AMyCProjectCharacter::ChangeAbilityLevelWithTags(FGameplayTagContainer TagContainer, int32 NewLevel)
+{
+	if (AbilitySystemComponent)
+	{
+		TArray<FGameplayAbilitySpec*> MatchingAbility;
+		AbilitySystemComponent->GetActivatableGameplayAbilitySpecsByAllMatchingTags(TagContainer, MatchingAbility, true);
+		for (FGameplayAbilitySpec* Spec : MatchingAbility)
+		{
+			Spec->Level = NewLevel;
+		}
+	}
+}
+
+void AMyCProjectCharacter::CancelAbilityWithTags(FGameplayTagContainer WithTags, FGameplayTagContainer WithoutTags)
+{
+	if (AbilitySystemComponent)
+	{
+		AbilitySystemComponent->CancelAbilities(&WithTags, &WithoutTags, nullptr);
+	}
+}
+
+void AMyCProjectCharacter::AddLooseGameplayTag(FGameplayTag TagToAdd)
+{
+	if (AbilitySystemComponent)
+	{
+		GetAbilitySystemComponent()->AddLooseGameplayTag(TagToAdd);
+		GetAbilitySystemComponent()->SetTagMapCount(TagToAdd, 1);
+	}
+}
+
+void AMyCProjectCharacter::RemoveLooseGameplayTags(FGameplayTag TagsToRemove)
+{
+	if (AbilitySystemComponent)
+	{
+		GetAbilitySystemComponent()->RemoveLooseGameplayTag(TagsToRemove);
+	}
+}
+
+UAbilitySystemComponent* AMyCProjectCharacter::GetAbilitySystemComponent() const
+{
+	return AbilitySystem;
 }

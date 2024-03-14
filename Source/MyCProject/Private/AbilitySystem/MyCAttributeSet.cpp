@@ -10,7 +10,7 @@ UMyCAttributeSet::UMyCAttributeSet()
 {
 	Health = 100.0f;
 	MaxHealth = 100.0f;
-	CurrentStamina = 100.0f;
+	Stamina = 100.0f;
 	MaximumStamina = 100.0f;
 	StaminaRegeneration = 1.0f;
 }
@@ -35,9 +35,9 @@ void UMyCAttributeSet::OnRep_MaximumHealth(const FGameplayAttributeData& OldValu
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UMyCAttributeSet, MaxHealth, OldValue);
 }
 
-void UMyCAttributeSet::OnRep_CurrentStamina(const FGameplayAttributeData& OldValue)
+void UMyCAttributeSet::OnRep_Stamina(const FGameplayAttributeData& OldValue)
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UMyCAttributeSet, CurrentStamina, OldValue);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UMyCAttributeSet, Stamina, OldValue);
 }
 
 void UMyCAttributeSet::OnRep_MaximumStamina(const FGameplayAttributeData& OldValue)
